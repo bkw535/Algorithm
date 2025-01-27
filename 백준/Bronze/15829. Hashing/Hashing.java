@@ -9,11 +9,15 @@ public class Main {
         int a = Integer.parseInt(br.readLine());
         String input = br.readLine();
 
-        int c = 0;
+        final int r = 31;
+        final int m = 1234567891;
+        long c = 0;
+        long power = 1;
 
         for (int i = 0; i < a; i++) {
-            int d = input.charAt(i) - 'a' + 1;
-            c += d * Math.pow(31, i);
+            long d = input.charAt(i) - 'a' + 1;
+            c = (c + (d * power) % m) % m;
+            power = (power * r) % m;
         }
 
         System.out.println(c);
