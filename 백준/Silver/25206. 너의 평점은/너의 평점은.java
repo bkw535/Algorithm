@@ -26,13 +26,11 @@ public class Main {
         for(int i=0; i<20; i++){
             String line = br.readLine();
             String[] data = line.split(" ");
+
             double point = Double.parseDouble(data[1]);
-            double value = 0;
-            if(!Objects.equals(data[2], "P"))
-                value = grade.get(data[2]);
-            else{
-                continue;
-            }
+            if (Objects.equals(data[2], "P")) continue;
+            double value = grade.getOrDefault(data[2], 0.0);
+
             sum += point*value;
             deptSum += point;
         }
