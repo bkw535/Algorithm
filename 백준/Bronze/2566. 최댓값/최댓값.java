@@ -5,7 +5,8 @@ import java.util.StringTokenizer;
 public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+        StringBuilder sb = new StringBuilder();
+        
         int[][] matrix = new int[9][9];
         int max = Integer.MIN_VALUE;
         int row = 0, col = 0;
@@ -22,7 +23,7 @@ public class Main {
             }
         }
 
-        System.out.println(max);
-        System.out.print(row+" "+col);
+        sb.append(max).append("\n").append(row).append(" ").append(col);
+        System.out.print(sb);
     }
 }
