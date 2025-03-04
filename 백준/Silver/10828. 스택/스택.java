@@ -8,37 +8,39 @@ public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        Stack<Integer> stack = new Stack<>();
+        Stack<String> stack = new Stack<>();
+        StringBuilder sb = new StringBuilder();
 
         int n = Integer.parseInt(st.nextToken());
 
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
             String s = st.nextToken();
-            
+
             if(s.equals("push")) {
-                stack.push(Integer.parseInt(st.nextToken()));
+                stack.push(st.nextToken());
             } else if(s.equals("pop")) {
                 if(stack.isEmpty()) {
-                    System.out.println("-1");
+                    sb.append("-1").append("\n");
                 } else {
-                    System.out.println(stack.pop());
+                    sb.append(stack.pop()).append("\n");
                 }
             } else if(s.equals("size")) {
-                System.out.println(stack.size());
+                sb.append(stack.size()).append("\n");
             } else if(s.equals("empty")) {
-                if(!stack.isEmpty()) {
-                    System.out.println(0);
+                if(stack.isEmpty()) {
+                    sb.append("1").append("\n");
                 } else {
-                    System.out.println(1);
+                    sb.append("0").append("\n");
                 }
             } else if(s.equals("top")) {
                 if(stack.isEmpty()) {
-                    System.out.println(-1);
+                    sb.append("-1").append("\n");
                 }else{
-                    System.out.println(stack.peek());
+                    sb.append(stack.peek()).append("\n");
                 }
             }
         }
+        System.out.println(sb);
     }
 }
