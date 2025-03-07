@@ -22,7 +22,7 @@ public class Main {
         sb.append("<");
         int index = 0;
         while (!list.isEmpty()) {
-            index = (index + (m - 1)) % list.size(); // m번째 위치 계산
+            index = (index + (m - 1)) % list.size();
             sb.append(list.get(index));
 
             list.remove(index);
