@@ -1,36 +1,32 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
+        StringBuilder sb = new StringBuilder();
+        
         int n = Integer.parseInt(br.readLine());
-        HashSet<Integer> set = new HashSet<>();
-
-        String[] input = br.readLine().split(" ");
-        for (String s : input) {
-            set.add(Integer.parseInt(s));  // 한 줄을 읽어서 숫자로 변환 후 HashSet에 추가
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        Set<Integer> set = new HashSet<>();
+        for(int i = 0; i < n; i++){
+            set.add(Integer.parseInt(st.nextToken()));
         }
-
+        
         int m = Integer.parseInt(br.readLine());
-        ArrayList<Integer> arr = new ArrayList<>();
-        String[] input2 = br.readLine().split(" ");
-        for (String s : input2) {
-            arr.add(Integer.parseInt(s));
-        }
-
-        for(int i = 0; i < m; i++) {
-            if(set.contains(arr.get(i))){
-                System.out.println(1);
-            } else{
-                System.out.println(0);
+        st = new StringTokenizer(br.readLine());
+        for(int i = 0; i < m; i++){
+            if(set.contains(Integer.parseInt(st.nextToken()))){
+                sb.append(1+"\n");
+            } else {
+                sb.append(0+"\n");
             }
-
         }
 
+        System.out.println(sb.toString());
     }
 }
