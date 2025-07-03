@@ -1,32 +1,28 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        Queue<Integer> queue = new LinkedList<>();
 
-        for (int i = 1; i <= N; i++) {
-            queue.offer(i);
+        int n = Integer.parseInt(br.readLine());
+
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 1; i <= n; i++) {
+            q.offer(i);
         }
 
-        while (queue.size() != 1) {
-            queue.poll();
-            if (queue.size() == 1) {
+        int b = 0;
+        while (!q.isEmpty()) {
+            if(q.size()==1){
+                b = q.poll();
                 break;
             }
-            int temp = queue.peek();
-            queue.poll();
-            queue.offer(temp);
+            q.poll();
+            int a = q.poll();
+            q.offer(a);
         }
 
-        System.out.println(queue.peek());
+        System.out.println(b);
     }
 }
