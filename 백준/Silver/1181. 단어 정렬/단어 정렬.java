@@ -1,26 +1,28 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Comparator;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+
         int n = Integer.parseInt(br.readLine());
-        String[] s = new String[n];
-
-        for(int i=0; i<n; i++){
-            s[i] = br.readLine();
+        Set<String> set = new HashSet<>();
+        for(int i = 0; i < n; i++){
+            set.add(br.readLine());
         }
 
-        Arrays.sort(s, Comparator.comparing(String::length).thenComparing(Comparator.naturalOrder()));
+        String[] arr = new String[set.size()];
+        arr = set.toArray(arr);
 
-        System.out.println(s[0]);
-        for (int i = 1; i < n; i++) {
-            if (!s[i].equals(s[i - 1])) {
-                System.out.println(s[i]);
-            }
+        Arrays.sort(arr, Comparator
+                .comparingInt(String::length)
+                .thenComparing(Comparator.naturalOrder()));
+
+        for(int i = 0; i < arr.length; i++){
+            sb.append(arr[i]).append("\n");
         }
+
+        System.out.println(sb.toString());
     }
 }
