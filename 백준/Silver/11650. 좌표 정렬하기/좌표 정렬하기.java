@@ -1,26 +1,33 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        long n = Long.parseLong(br.readLine());
-        ArrayList<Long[]> arr = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
 
-        for(int i=0; i<n; i++){
-            String[] m = br.readLine().split(" ");
-            long x = Long.parseLong(m[0]);
-            long y = Long.parseLong(m[1]);
-            arr.add(new Long[]{x, y});
+        int n = Integer.parseInt(br.readLine());
+
+        int[][] arr = new int[n][2];
+        for(int i = 0; i < n; i++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for(int j = 0; j < 2; j++){
+                arr[i][j] = Integer.parseInt(st.nextToken());
+            }
         }
 
-        arr.sort(Comparator.comparing((Long[] a) -> a[0]).thenComparing(a -> a[1]));
+        Arrays.sort(arr, (a,b) -> {
+            if(a[0] == b[0]){
+                return a[1] - b[1];
+            } else{
+                return a[0] - b[0];
+            }
+        });
 
-        for(Long[] i : arr){
-            System.out.println(i[0] + " " + i[1]);
+        for(int i = 0; i < n; i++){
+            sb.append(arr[i][0]).append(" ").append(arr[i][1]).append("\n");
         }
+
+        System.out.println(sb.toString());
     }
 }
