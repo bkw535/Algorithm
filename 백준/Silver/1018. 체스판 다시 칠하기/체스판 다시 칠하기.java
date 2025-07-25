@@ -1,47 +1,43 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.*;
+import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] input = br.readLine().split(" ");
-        int N = Integer.parseInt(input[0]);
-        int M = Integer.parseInt(input[1]);
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
 
         char[][] board = new char[N][M];
 
         for (int i = 0; i < N; i++) {
-            board[i] = br.readLine().toCharArray();
+            String line = br.readLine();
+            board[i] = line.toCharArray();
         }
 
-        int minPaint = Integer.MAX_VALUE;
+        int minCount = 64;
 
-        for (int r = 0; r <= N - 8; r++) {
-            for (int c = 0; c <= M - 8; c++) {
-                minPaint = Math.min(minPaint, countRepaints(board, r, c));
+        for (int r = 0; r < N - 7; r++) {
+            for (int c = 0; c < M - 7; c++) {
+                int count1 = 0;
+                int count2 = 0;
+
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
+                        char current = board[r + i][c + j];
+                        if ((i + j) % 2 == 0) {
+                            if (current != 'W') count1++;
+                            if (current != 'B') count2++;
+                        } else {
+                            if (current != 'B') count1++;
+                            if (current != 'W') count2++;
+                        }
+                    }
+                }
+                minCount = Math.min(minCount, Math.min(count1, count2));
             }
         }
 
-        System.out.println(minPaint);
-    }
-
-    private static int countRepaints(char[][] board, int r, int c) {
-        int count1 = 0;
-        int count2 = 0;
-
-        char[] start = {'B', 'W'};
-
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                char expected1 = start[(i + j) % 2];
-                char expected2 = start[(i + j + 1) % 2];
-
-                if (board[r + i][c + j] != expected1) count1++;
-                if (board[r + i][c + j] != expected2) count2++;
-            }
-        }
-
-        return Math.min(count1, count2);
+        System.out.println(minCount);
     }
 }
