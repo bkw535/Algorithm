@@ -7,23 +7,19 @@ public class Main{
         StringTokenizer st = new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
-        int count = 0;
         
         int[] arr = new int[N];
         for(int i=0; i<N; i++) {
-            int n = Integer.parseInt(br.readLine());
-            arr[i] = n;
+            arr[i] = Integer.parseInt(br.readLine());
         }
         
+        int count = 0;
+        int m = K;
         for(int i=N-1; i>=0; i--) {
-            int c = 0;
-            if(arr[i]>K){
-                continue;
-            } else {
-                c+=(K/arr[i]);
-                count+=c;
+            if(arr[i] <= m){
+                count+=m/arr[i];
+                m%=arr[i];
             }
-            K -=arr[i]*c;
         }
         
         System.out.println(count);
