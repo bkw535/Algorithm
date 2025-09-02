@@ -9,11 +9,10 @@ public class Main {
         
         Queue<Integer> queue = new LinkedList<>();
         for(int i=0; i<n; i++) {
-            String str = br.readLine();
-            String[] arr = str.split(" ");
-            switch(arr[0]) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            switch(st.nextToken()) {
                 case "push":
-                    queue.offer(Integer.parseInt(arr[1]));
+                    queue.offer(Integer.parseInt(st.nextToken()));
                     break;
                 case "pop":
                     if(!queue.isEmpty()) {
