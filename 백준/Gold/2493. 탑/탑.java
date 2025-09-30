@@ -1,38 +1,37 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-
+        
         int N = Integer.parseInt(br.readLine());
         StringTokenizer st = new StringTokenizer(br.readLine());
-
-        int[] arr = new int[N + 1];
-        int[] result = new int[N + 1];
-        Stack<Integer> stack = new Stack<>();
-
-        for (int i = 1; i <= N; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
-
-            while (!stack.isEmpty() && arr[stack.peek()] < arr[i]) {
-                stack.pop();
+        
+        int[] result = new int[N];
+        Deque<int[]> deque = new ArrayDeque<>();
+        
+        for (int i = 0; i < N; i++) {
+            int height = Integer.parseInt(st.nextToken());
+            
+            while (!deque.isEmpty() && deque.peekLast()[0] <= height) {
+                deque.pollLast();
             }
-
-            if (!stack.isEmpty()) {
-                result[i] = stack.peek();
+            
+            if (!deque.isEmpty()) {
+                result[i] = deque.peekLast()[1];
             } else {
                 result[i] = 0;
             }
-
-            stack.push(i);
+            
+            deque.addLast(new int[]{height, i+1});
         }
-
-        for (int i = 1; i <= N; i++) {
-            sb.append(result[i]).append(" ");
+        
+        for (int x : result) {
+            sb.append(x).append(" ");
         }
-
+        
         System.out.println(sb);
     }
 }
