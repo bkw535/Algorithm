@@ -1,43 +1,38 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Stack;
+import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringBuilder sb = new StringBuilder();
-
         int n = Integer.parseInt(br.readLine());
-
-        for (int i = 0; i < n; i++) {
+        
+        for(int i=0; i<n; i++) {
+            Deque<Character> deque = new ArrayDeque<>();
             String s = br.readLine();
-            boolean isValid = checkValidParentheses(s);
-
-            if (isValid) {
-                sb.append("YES\n");
-            } else {
-                sb.append("NO\n");
-            }
-        }
-
-        System.out.println(sb);
-    }
-    
-    public static boolean checkValidParentheses(String s) {
-        Stack<Character> stack = new Stack<>();
-
-        for (char c : s.toCharArray()) {
-            if (c == '(') {
-                stack.push(c);
-            } else if (c == ')') {
-                if (stack.isEmpty()) {
-                    return false;
+            boolean tf = true;
+            
+            for(char c : s.toCharArray()) {
+                if(c == '(') {
+                    deque.addLast(c);
+                } else if(c == ')') {
+                    if(deque.isEmpty()) {
+                        tf = false;
+                        break;
+                    }
+                    deque.pollFirst();
                 }
-                stack.pop();
+            }
+            
+            if(!deque.isEmpty()) tf = false;
+            
+            if(tf) {
+                sb.append("YES").append("\n");
+            } else {
+                sb.append("NO").append("\n");
             }
         }
-
-        return stack.isEmpty();
+        
+        System.out.println(sb);
     }
 }
