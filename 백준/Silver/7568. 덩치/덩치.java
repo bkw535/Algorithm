@@ -7,20 +7,27 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         int N = Integer.parseInt(br.readLine());
         
-        int[][] arr = new int[N][2];
+        int[][] spec = new int[N][2];
         for(int i=0; i<N; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            arr[i][0] = Integer.parseInt(st.nextToken());
-            arr[i][1] = Integer.parseInt(st.nextToken());
+            int weight = Integer.parseInt(st.nextToken());
+            int height = Integer.parseInt(st.nextToken());
+            spec[i][0] = weight;
+            spec[i][1] = height;
         }
         
         for(int i=0; i<N; i++) {
+            int weight = spec[i][0];
+            int height = spec[i][1];
             int count = 0;
+            
             for(int j=0; j<N; j++) {
-                if(i == j) continue;
-                if(arr[i][0] < arr[j][0] && arr[i][1] < arr[j][1]) count++;
+                if(i==j) continue;
+                if(weight<spec[j][0] && height<spec[j][1]) count++;
             }
-            sb.append(count+1).append(" ");
+            
+            count++;
+            sb.append(count).append(" ");
         }
         
         System.out.println(sb.toString().trim());
