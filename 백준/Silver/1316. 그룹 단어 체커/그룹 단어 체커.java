@@ -1,32 +1,32 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
+        int N = Integer.parseInt(br.readLine());
         
         int count = 0;
-        char m = ' ';
-        for(int i=0; i<n; i++) {
-            Set<Character> set = new HashSet<>();
+        for(int i = 0; i < N; i++) {
+            Set<Character> alphabet = new HashSet<>();
+            String word = br.readLine();
+            alphabet.add(word.charAt(0));
+            boolean tf = true;
             
-            String s = br.readLine();
-            boolean dp = false;
-            for(char c : s.toCharArray()) {
-                if(set.contains(c) && m != c) {
-                    dp = true;
-                    break;
+            for(int j=1; j<word.length(); j++) {
+                char pre = word.charAt(j-1);
+                char cur = word.charAt(j);
+                    
+                if (pre != cur) {
+                    if (alphabet.contains(cur)) {
+                        tf = false;
+                        break;
+                    }
+                    alphabet.add(cur);
                 }
-                m = c;
-                set.add(c);
             }
             
-            if(dp) {
-                continue;
-            }
-            
-            count++;
+            if(tf) count++;
         }
         
         System.out.println(count);
