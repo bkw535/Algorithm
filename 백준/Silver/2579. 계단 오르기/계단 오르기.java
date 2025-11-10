@@ -1,30 +1,32 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        int[] arr = new int[n];
+        int N = Integer.parseInt(br.readLine());
         
-        for(int i=0; i<n; i++) {
-            arr[i] = Integer.parseInt(br.readLine());
+        int[] stairs = new int[N+1];
+        for(int i=1; i<N+1; i++) {
+            stairs[i] = Integer.parseInt(br.readLine());
         }
         
-        int[][] dp = new int[n+1][2];
-        dp[1][0] = arr[0];
-        dp[1][1] = 0;
+        if(N<=1) {
+            System.out.println(stairs[N]);
+            return;
+        } else if(N == 2) {
+            System.out.println(stairs[N] + stairs[N-1]);
+            return;
+        } else {
+            int[] dp = new int[N+1];
+            Arrays.fill(dp, 0);
+            dp[1] += stairs[1];
+            dp[2] += stairs[1] + stairs[2];
+            for(int i=3; i<N+1; i++) {
+                dp[i] = Math.max(dp[i-2], dp[i-3] + stairs[i-1]) + stairs[i];
+            }
         
-        if(n>=2) {
-            dp[2][0] = arr[0] + arr[1];
-            dp[2][1] = arr[1];
+            System.out.println(dp[N]);
         }
-        
-        for(int i=3; i<=n; i++) {
-            dp[i][0] = dp[i-1][1] + arr[i-1];
-            dp[i][1] = Math.max(dp[i-2][0], dp[i-2][1]) + arr[i-1];
-        }
-        
-        System.out.println(Math.max(dp[n][0], dp[n][1]));
     }
 }
