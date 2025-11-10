@@ -1,5 +1,5 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -18,5 +18,6 @@ public class Main {
             int N = Integer.parseInt(br.readLine());
             System.out.println(dp[N]);
         }
+        
     }
 }
