@@ -11,24 +11,25 @@ class Solution {
         
         int[] scores = new int[3];
         
-        for(int i = 0; i<answers.length; i++){
-            for(int j=0; j<pattern.length; j++){
-                if(answers[i] == pattern[j][i%pattern[j].length]){
-                    scores[j]++;
+        for(int i=0; i<3; i++) {
+            for(int j=0; j<answers.length; j++) {
+                if(answers[j] == pattern[i][j % pattern[i].length]) {
+                    scores[i]++;
                 }
             }
         }
         
-        int MaxScore = Arrays.stream(scores).max().getAsInt();
+        int max = Math.max(Math.max(scores[0],scores[1]), scores[2]);
         
-        
-        ArrayList<Integer> answer = new ArrayList<>();
-        for(int i=0; i<scores.length; i++){
-            if(scores[i] == MaxScore){
-                answer.add(i+1);
+        List<Integer> result = new ArrayList<>();
+        for(int i=0; i<3; i++) {
+            if(scores[i] == max) {
+                result.add(i+1);
             }
         }
         
-        return answer.stream().mapToInt(Integer::intValue).toArray();
+        return result.stream()
+                    .mapToInt(Integer::intValue)
+                    .toArray();
     }
 }
