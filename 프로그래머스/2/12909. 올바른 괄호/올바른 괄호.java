@@ -4,27 +4,21 @@ class Solution {
     boolean solution(String s) {
         boolean answer = true;
 
-        Stack<Character> stack = new Stack<>();
-
-        int count = 0;
-
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '(') {
-                stack.push(s.charAt(i));
-                count++;
-            } else{
-                if (stack.isEmpty()) {
-                    answer = false;
-                    break;
-                }
+        Stack<String> stack = new Stack<>();
+        for(int i=0; i<s.length(); i++) {
+            String n = s.charAt(i) + "";
+            
+            if(n.equals("(")) stack.push(n);
+            
+            if(!stack.isEmpty() && n.equals(")")) {
                 stack.pop();
-                count--;
+            } else if(stack.isEmpty() && n.equals(")")) {
+                answer = false;
+                break;
             }
         }
-
-        if (count != 0) {
-            answer = false;
-        }
+        
+        if(!stack.isEmpty()) answer = false;
 
         return answer;
     }
