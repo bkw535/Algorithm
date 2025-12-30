@@ -2,45 +2,38 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String[] genres, int[] plays) {
-        HashMap<String, Integer> mostGenres = new HashMap<>();
-        HashMap<String, List<int[]>> mostPlays = new HashMap<>();
+        Map<String, Integer> genreTotal = new HashMap<>();
+
+        Map<String, List<int[]>> songsByGenre = new HashMap<>();
 
         for (int i = 0; i < genres.length; i++) {
-            String genre = genres[i];
-            int play = plays[i];
+            genreTotal.put(genres[i],
+                    genreTotal.getOrDefault(genres[i], 0) + plays[i]);
 
-            mostGenres.put(genre, mostGenres.getOrDefault(genre, 0) + play);
-
-            List<int[]> list = mostPlays.getOrDefault(genre, new ArrayList<>());
-            list.add(new int[]{play, i});
-            mostPlays.put(genre, list);
+            songsByGenre
+                .computeIfAbsent(genres[i], k -> new ArrayList<>())
+                .add(new int[]{i, plays[i]});
         }
 
-        List<String> genreOrder = new ArrayList<>(mostGenres.keySet());
-        genreOrder.sort((a, b) -> mostGenres.get(b) - mostGenres.get(a));
+        List<String> genreOrder = new ArrayList<>(genreTotal.keySet());
+        genreOrder.sort((a, b) -> genreTotal.get(b) - genreTotal.get(a));
 
         List<Integer> result = new ArrayList<>();
 
         for (String genre : genreOrder) {
-            List<int[]> songs = mostPlays.get(genre);
+            List<int[]> songs = songsByGenre.get(genre);
 
             songs.sort((a, b) -> {
-                if (b[0] == a[0]) {
-                    return a[1] - b[1];
-                }
-                return b[0] - a[0];
+                if (b[1] != a[1]) return b[1] - a[1];
+                return a[0] - b[0];
             });
 
-            for (int i = 0; i < songs.size() && i < 2; i++) {
-                result.add(songs.get(i)[1]);
+            result.add(songs.get(0)[0]);
+            if (songs.size() > 1) {
+                result.add(songs.get(1)[0]);
             }
         }
 
-        int[] answer = new int[result.size()];
-        for (int i = 0; i < result.size(); i++) {
-            answer[i] = result.get(i);
-        }
-
-        return answer;
+        return result.stream().mapToInt(Integer::intValue).toArray();
     }
 }
