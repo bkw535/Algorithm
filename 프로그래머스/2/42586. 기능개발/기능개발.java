@@ -2,35 +2,28 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
-        int[] arr = new int[speeds.length];
+        ArrayList<Integer> answer = new ArrayList<>();
+        int[] count = new int[speeds.length];
         
         for(int i=0; i<speeds.length; i++) {
-            int remain = 100 - progresses[i];
-            
-            if(remain % speeds[i] != 0) {
-                arr[i] = remain / speeds[i] + 1;
-            } else {
-                arr[i] = remain / speeds[i];
-            }
+            count[i] = (100 - progresses[i]) / speeds[i];
+            if((100 - progresses[i]) % speeds[i] != 0) count[i] += 1;
         }
         
-        List<Integer> result = new ArrayList<>();
-        int days = 0;
-        days = arr[0];
-        int count = 1;
-        for(int i=1; i<arr.length; i++) {
-            if (arr[i] <= days) {
-                count++;
-            } else {
-                result.add(count);
-                count = 1;
-                days = arr[i];
+        int cur = count[0];
+        int num = 1;
+        for(int i=1; i<count.length; i++) {
+            if(cur >= count[i]) num++;
+            else {
+                answer.add(num);
+                cur = count[i];
+                num = 1;
             }
         }
-        result.add(count);
+        answer.add(num);
         
-        return result.stream()
-            .mapToInt(Integer::intValue)
-            .toArray();
+        return answer.stream()
+                     .mapToInt(Integer::intValue)
+                     .toArray();
     }
 }
