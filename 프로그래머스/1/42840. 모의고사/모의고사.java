@@ -2,34 +2,29 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] answers) {
-        
-        int[][] pattern = {
+        int[][] tester = {
             {1,2,3,4,5},
             {2,1,2,3,2,4,2,5},
             {3,3,1,1,2,2,4,4,5,5}
         };
         
-        int[] scores = new int[3];
+        int test1 = 0;
+        int test2 = 0;
+        int test3 = 0;
         
-        for(int i=0; i<3; i++) {
-            for(int j=0; j<answers.length; j++) {
-                if(answers[j] == pattern[i][j % pattern[i].length]) {
-                    scores[i]++;
-                }
-            }
+        for(int i=0; i<answers.length; i++) {
+            if (answers[i] == tester[0][i % 5]) test1++;
+            if (answers[i] == tester[1][i % 8]) test2++;
+            if (answers[i] == tester[2][i % 10]) test3++;
         }
         
-        int max = Math.max(Math.max(scores[0],scores[1]), scores[2]);
+        int max = Math.max(test1, Math.max(test2, test3));
         
-        List<Integer> result = new ArrayList<>();
-        for(int i=0; i<3; i++) {
-            if(scores[i] == max) {
-                result.add(i+1);
-            }
-        }
+        List<Integer> list = new ArrayList<>();
+        if(max == test1) list.add(1);
+        if(max == test2) list.add(2);
+        if(max == test3) list.add(3);
         
-        return result.stream()
-                    .mapToInt(Integer::intValue)
-                    .toArray();
+        return list.stream().mapToInt(i -> i).toArray();
     }
 }
