@@ -1,36 +1,33 @@
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 class Solution {
     public int solution(int[] priorities, int location) {
-        int answer = 0;
-        Queue<int[]> queue = new LinkedList<>();
-
-        for(int i = 0; i < priorities.length; i++){
-            queue.add(new int[]{priorities[i], i});
+        Deque<int[]> deque = new ArrayDeque<>();
+        
+        PriorityQueue<Integer> pqueue = new PriorityQueue<>(Collections.reverseOrder());
+        
+        for(int i=0; i<priorities.length; i++) {
+            deque.add(new int[]{priorities[i], i});
+            pqueue.add(priorities[i]);
         }
-
-        while(!queue.isEmpty()){
-            int[] check = queue.poll();
-
-            boolean hasHigher = false;
-            for(int[] q : queue){
-                if(q[0] > check[0]){
-                    hasHigher = true;
-                    break;
-                }
-            }
-
-            if(hasHigher){
-                queue.offer(check);
-            } else {
+        
+        int answer = 0;
+        
+        while(!deque.isEmpty()) {
+            int[] current = deque.poll();
+            
+            if(current[0] == pqueue.peek()) {
                 answer++;
-                if(check[1] == location){
+                pqueue.poll();
+                
+                if(current[1] == location) {
                     return answer;
                 }
+            } else {
+                deque.add(current);
             }
         }
-
+        
         return answer;
     }
 }
