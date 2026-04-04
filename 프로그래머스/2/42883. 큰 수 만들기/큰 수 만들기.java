@@ -2,11 +2,15 @@ import java.util.*;
 
 class Solution {
     public String solution(String number, int k) {
-        StringBuilder answer = new StringBuilder();
-        Stack<Character> stack = new Stack<>();
+        ArrayList<String> list = new ArrayList<>();
         
-        for (char c : number.toCharArray()) {
-            while (!stack.isEmpty() && k > 0 && stack.peek() < c) {
+        Stack<Character> stack = new Stack<>();
+        int len = number.length() - k;
+        
+        for(int i=0; i<number.length(); i++) {
+            char c = number.charAt(i);
+            
+            while(!stack.isEmpty() && stack.peek() < c && k > 0) {
                 stack.pop();
                 k--;
             }
@@ -14,15 +18,11 @@ class Solution {
             stack.push(c);
         }
         
-        while (k > 0) {
-            stack.pop();
-            k--;
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<len; i++) {
+            sb.append(stack.get(i));
         }
-            
-        for (char c : stack) {
-            answer.append(c);
-        }
-
-        return answer.toString();
+        
+        return sb.toString();
     }
 }
