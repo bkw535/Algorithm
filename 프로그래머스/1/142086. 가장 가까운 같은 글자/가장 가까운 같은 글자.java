@@ -2,23 +2,24 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String s) {
-        int[] arr = new int[s.length()];
         int[] answer = new int[s.length()];
-        Set<Character> set = new HashSet<>();
+        Deque<Character> deque = new ArrayDeque<>();
         
         for(int i=0; i<s.length(); i++) {
-            char a = s.charAt(i);
-            if(set.contains(a)) {
+            if(!deque.contains(s.charAt(i))) {
+                answer[i] = -1;
+            } else {
+                int idx = 1;
                 for(int j=i-1; j>=0; j--) {
-                    if(s.charAt(j) == a) {
-                        answer[i] = i-j;
+                    if(s.charAt(j) == s.charAt(i)) {
+                        answer[i] = idx;
                         break;
                     }
-                }
-            } else {
-                set.add(a);
-                answer[i] = -1;
+                    idx++;
+                }   
             }
+            
+            deque.offer(s.charAt(i));
         }
         
         return answer;
