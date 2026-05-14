@@ -2,37 +2,52 @@ import java.util.*;
 
 class Solution {
     public int[] solution(String[] id_list, String[] report, int k) {
-        Map<String, Integer> map = new HashMap<>();
-        
+        // 전체 인원
+        Map<String, Integer> person = new HashMap<>();
         for(int i=0; i<id_list.length; i++) {
-            map.put(id_list[i], 0);
+            person.put(id_list[i], 0);
         }
         
-        Set<String> set = new HashSet<>(Arrays.asList(report));
-        Map<String, List<String>> reportMap = new HashMap<>();
-        for(String s : set) {
-            String[] re = s.split(" ");
-            String reporter = re[0];
-            String target = re[1];
+        // 신고 기록
+        Map<String, Set<String>> result = new HashMap<>();
+        for(int i=0; i<report.length; i++) {
+            StringTokenizer st = new StringTokenizer(report[i]);
+            String a = st.nextToken();
+            String b = st.nextToken();
             
-            map.put(target, map.getOrDefault(target, 0) + 1);
+            if(!result.containsKey(a)) {
+                result.put(a, new HashSet<>());
+            }
             
-            reportMap.putIfAbsent(reporter, new ArrayList<>());
-            reportMap.get(reporter).add(target);
+            result.get(a).add(b);
         }
         
-        int[] answer = new int[id_list.length];
+        // 신고 횟수
         for(int i=0; i<id_list.length; i++) {
-            String user = id_list[i];
-            if(!reportMap.containsKey(user)) continue;
-            
-            for(String target : reportMap.get(user)) {
-                if(map.get(target) >= k) {
-                    answer[i]++;
+            String name = id_list[i];
+            if(!result.containsKey(name)) continue;
+            for(String s : result.get(name)) {
+                person.put(s, person.get(s) + 1);   
+            }
+        }
+        
+        // 결과 비교
+        Map<String, Integer> mail = new HashMap<>();
+        for(String s : result.keySet()) {
+            Set<String> set = result.get(s);
+            for(String target : set) {
+                if(person.get(target) >= k) {
+                    mail.put(s, mail.getOrDefault(s, 0) + 1);
                 }
             }
         }
         
-        return answer;
+        // 결과 저장
+        int[] count = new int[id_list.length];
+        for(int i=0; i<id_list.length; i++) {
+            count[i] = mail.getOrDefault(id_list[i], 0);
+        }
+        
+        return count;
     }
 }
