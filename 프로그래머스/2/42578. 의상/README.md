@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 85.3 MB, 시간: 0.14 ms
+메모리: 61.6 MB, 시간: 0.11 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2026년 04월 03일 22:52:30
+2026년 05월 14일 16:41:31
 
 ### 문제 설명
 
@@ -88,7 +88,7 @@
 
 <p>예제 #1<br>
 headgear에 해당하는 의상이 yellow_hat, green_turban이고 eyewear에 해당하는 의상이 blue_sunglasses이므로 아래와 같이 5개의 조합이 가능합니다.</p>
-<div class="highlight"><pre class="codehilite"><code>1. yellow_hat
+<div class="highlight" bis_skin_checked="1"><pre class="codehilite"><code>1. yellow_hat
 2. blue_sunglasses
 3. green_turban
 4. yellow_hat + blue_sunglasses
@@ -96,7 +96,7 @@ headgear에 해당하는 의상이 yellow_hat, green_turban이고 eyewear에 해
 </code></pre></div>
 <p>예제 #2<br>
 face에 해당하는 의상이 crow_mask, blue_sunglasses, smoky_makeup이므로 아래와 같이 3개의 조합이 가능합니다.</p>
-<div class="highlight"><pre class="codehilite"><code>1. crow_mask
+<div class="highlight" bis_skin_checked="1"><pre class="codehilite"><code>1. crow_mask
 2. blue_sunglasses
 3. smoky_makeup
 </code></pre></div>
