@@ -4,11 +4,8 @@ class Solution {
     public int[] solution(int[] progresses, int[] speeds) {
         Deque<Integer> deque = new ArrayDeque<>();
         
-        int date = 0;
-        
         for(int i=0; i<progresses.length; i++) {
-            date = 0;
-            date = (100-progresses[i]) / speeds[i];
+            int date = (100-progresses[i]) / speeds[i];
             if((100-progresses[i]) % speeds[i] != 0) date++;
             
             deque.offer(date);
