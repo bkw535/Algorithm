@@ -4,30 +4,31 @@ class Solution {
     public int solution(int[] priorities, int location) {
         Deque<int[]> deque = new ArrayDeque<>();
         
-        PriorityQueue<Integer> pqueue = new PriorityQueue<>(Collections.reverseOrder());
-        
         for(int i=0; i<priorities.length; i++) {
-            deque.add(new int[]{priorities[i], i});
-            pqueue.add(priorities[i]);
+            deque.offer(new int[]{i, priorities[i]});
         }
         
-        int answer = 0;
-        
+        int idx = 0;
         while(!deque.isEmpty()) {
-            int[] current = deque.poll();
-            
-            if(current[0] == pqueue.peek()) {
-                answer++;
-                pqueue.poll();
-                
-                if(current[1] == location) {
-                    return answer;
+            int[] arr = deque.poll();
+            boolean tf = false;
+            for(int[] i : deque) {
+                if(i[1] > arr[1]) {
+                    tf = true;
+                    break;
                 }
+            }
+            
+            if(tf) {
+                deque.offer(new int[]{arr[0], arr[1]});
             } else {
-                deque.add(current);
+                idx++;
+                if(arr[0] == location) {
+                    return idx;
+                }
             }
         }
         
-        return answer;
+        return idx;
     }
 }
