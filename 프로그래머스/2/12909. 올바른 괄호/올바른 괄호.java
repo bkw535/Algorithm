@@ -4,18 +4,27 @@ class Solution {
     boolean solution(String s) {
         boolean answer = true;
 
-        Stack<Character> stack = new Stack<>();
-        
-        if(s.charAt(0) == ')') return false;
-        
-        for(int i=0; i<s.length(); i++) {
-            if(s.charAt(i) == '(') stack.push(s.charAt(i));
-            if(!stack.isEmpty()) {
-                if(s.charAt(i) == ')') stack.pop();
+        Deque<Character> deque = new ArrayDeque<>();
+        for(char c : s.toCharArray()) {
+            if(c == '(') deque.offer(c);
+            
+            if(deque.isEmpty() && c == ')') {
+                answer = false;
+                break;
             }
+            
+            if(c == ')' && deque.isEmpty()) {
+                answer = false;
+                break;
+            }
+            
+            if(c == ')' && !deque.isEmpty()) {
+                deque.poll();
+            }
+            
         }
         
-        if(!stack.isEmpty()) return false;
+        if(!deque.isEmpty()) answer = false;
 
         return answer;
     }
