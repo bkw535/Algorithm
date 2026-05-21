@@ -1,31 +1,40 @@
 class Solution {
     public int solution(int n, int[] lost, int[] reserve) {
-        int[] st = new int[n];
-        
-        for(int i : lost) {
-            st[i-1]++;
-        }
-        
-        for(int i : reserve) {
-            st[i-1]--;
-        }
+        int[] stu = new int[n];
         
         for(int i=0; i<n; i++) {
-            if(st[i] == -1) {
-                if(i > 0 && st[i-1] == 1) {
-                    st[i]++;
-                    st[i-1]--;
-                } else if(i < n-1 && st[i+1] == 1) {
-                    st[i]++;
-                    st[i+1]--;
-                }
+            stu[i] = 1;
+        }
+        
+        // 체육복 도난
+        for(int i : lost) {
+            stu[i-1]-=1;
+        }
+        
+        // 여분 체육복
+        for(int i : reserve) {
+            stu[i-1]+=1;
+        }
+        
+        // 체육복 빌려줌
+        for(int i=0; i<n; i++) {
+            if(stu[i] == 0) {
+                if(i-1>=0 && stu[i-1] > 1) {
+                    stu[i-1]--;
+                    stu[i]++;
+                } else if(i+1<n && stu[i+1] > 1) {
+                    stu[i+1]--;
+                    stu[i]++;
+                }   
             }
         }
         
+        // 체육복 소유 총 학생 수
         int answer = 0;
-        
-        for(int i : st) {
-            if(i <= 0) answer++;
+        for(int i : stu) {
+            if(i >=1) {
+                answer++;
+            }
         }
         
         return answer;
