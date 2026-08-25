@@ -1,21 +1,26 @@
-import java.util.HashSet;
+import java.util.*;
 
 class Solution {
+    ArrayList<Integer> list = new ArrayList<>();
     public int[] solution(int[] numbers) {
-        HashSet<Integer> s = new HashSet<>();
-        for(int i = 0; i < numbers.length; i++){
-            for(int j = i + 1; j < numbers.length; j++){
-                if(i==j)
-                    continue;
-                else
-                    s.add(numbers[i]+numbers[j]);
-            }
+        for(int i=0; i<numbers.length; i++) {
+            int a = numbers[i];
+            sum(i, a, numbers);
         }
-        int[] answer = s
-            .stream()
-            .mapToInt(Integer::intValue)
-            .sorted()
-            .toArray();
+        
+        Collections.sort(list);
+        
+        int[] answer = list.stream().mapToInt(Integer::intValue).toArray();
+        
         return answer;
     }
+    
+    public void sum(int m, int n, int[] numbers) {
+        for(int i=0; i<numbers.length; i++) {
+            if(i == m) continue;
+            int b = n + numbers[i];
+            if(list.contains(b)) continue;
+            list.add(b);
+        }
+    } 
 }
